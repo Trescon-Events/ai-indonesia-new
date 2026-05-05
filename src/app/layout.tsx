@@ -25,7 +25,10 @@ const inter = Inter({
 });
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://worldaishow.com";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "World AI Show Indonesia 2025 | Jakarta",
   description: "Architecting Indonesia's Sovereign & Scalable AI Future. The premier AI event in Southeast Asia — Jakarta, Indonesia.",
   keywords: "World AI Show, Indonesia, Jakarta, AI Conference, Artificial Intelligence, Southeast Asia",
@@ -43,6 +46,12 @@ export const metadata: Metadata = {
         height: 630,
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "World AI Show Indonesia 2025",
+    description: "Architecting Indonesia's Sovereign & Scalable AI Future",
+    images: [`${BASE_PATH}/images/og-image.png`],
   },
 };
 
