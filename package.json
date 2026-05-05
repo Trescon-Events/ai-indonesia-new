@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3004",
+    "prebuild": "node scripts/fetch-speakers.mjs",
     "build": "next build",
     "start": "next start"
   },

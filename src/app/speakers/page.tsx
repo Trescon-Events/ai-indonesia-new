@@ -2,133 +2,10 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { speakers, type Speaker } from "@/data/speakers";
 
-const speakers = [
-  {
-    name: "H.E. Prof. Dr. Pratikno",
-    title: "Coordinating Minister of Human Development and Culture",
-    org: "Republic of Indonesia",
-    country: "Indonesia",
-    img: "/images/speaker-dr-pratikno.png",
-    topic: "",
-    tag: "",
-    bio: "",
-  },
-  {
-    name: "Vivi Yulaswati",
-    title: "Deputy for Economic Affairs and Digital Transformation",
-    org: "BAPPENAS",
-    country: "Indonesia",
-    img: "/images/speaker-vivi-yulaswati.png",
-    topic: "",
-    tag: "",
-    bio: "Made substantial contributions to the planning, design, and evaluation of national poverty reduction programs (including PNPM, PKH, subsidy reforms, and non-cash assistance), the development of the National Strategy for Financial Inclusion, the National Social Security System, Government-to-Person (G2P) payment mechanisms, various disability-related regulations and development facilitation frameworks, as well as the development of integrated service and referral systems for comprehensive social protection. In addition, led the formulation of the National Action Plan for the SDGs, the revision of the SDGs 2030 Roadmap, and the preparation of Indonesia’s Voluntary National Review (VNR) to the United Nations. Currently involved in preparing the Economic Transformation agenda and the Long-Term Development Plan 2020–2045, along with priority programs related to energy transition, low-carbon development, Food Estate, bioeconomy, and geopark development, among others.",
-  },
-  {
-    name: "Wempi Saputra",
-    title: "Executive Director",
-    org: "The World Bank",
-    country: "USA",
-    img: "/images/speaker-wempi-saputra.png",
-    topic: "",
-    tag: "",
-    bio: "Wempi Saputra has served as an Executive Director of the World Bank Group (WBG), representing the Southeast Asia Voting Group (SEAVG), a diverse constituency of 11 countries: Brunei, Fiji, Indonesia, Lao PDR, Malaysia, Myanmar, Nepal, Singapore, Thailand, Tonga, and Viet Nam. His leadership has been instrumental in shaping the WBG Evolution Roadmap, particularly in climate financing, pricing policy, partnerships, small-states strategy, and played an instrumental role in securing an USD 11 billion Framework for Financial Incentives, a USD 200 million Livable Planet Fund, and a USD 100 million Grant Facility for Project Preparation—critical resources that bolster the Bank’s support for member countries. With more than three decades of distinguished service in development, economics, trade, finance, policy, and institutional reform, Dr. Wempi Saputra has built a reputation as a highly accomplished leader in both national and multilateral arenas. His career reflects a rare combination of technical expertise, strategic vision, and diplomatic skill, shaping policies that impact millions across the region and beyond.",
-  },
-  {
-    name: "Arie Purwanto",
-    title: "Deputy Director of Data Science and Governance",
-    org: "Badan Pemeriksa Keuangan",
-    country: "Indonesia",
-    img: "/images/speaker-arie-purwanto.png",
-    topic: "",
-    tag: "",
-    bio: "Arie has been the Deputy Director of Data Science and Governance of the Supreme Audit Institution of Indonesia (Badan Pemeriksa Keuangan/BPK) since February 2025. He is responsible for managing BPK's data collections, processing, analysis, and dissemination, as well as developing BPK's data governance and data science applications based on emerging technologies (i.e., Artificial Intelligence/AI), including the data domain of BPK's enterprise architecture. Before that position, he had more than 10 years of experience as one of BPK's full-stack developers and 4 years as the Head of General and IT for BPK's South Kalimantan Office, and as the Head of IT Performance Management. Between the posts, he graduated from the doctoral program of the Faculty of Technology Policy and Management at Delft University of Technology in 2021.",
-  },
-  {
-    name: "Sujala Pant",
-    title: "Deputy Resident Representative",
-    org: "UNDP Indonesia",
-    country: "Indonesia",
-    img: "/images/speaker-sujala-pant.png",
-    topic: "",
-    tag: "",
-    bio: "Sujala Pant is the Deputy Resident Representative (DRR) at UNDP Indonesia since 2022, providing strategic leadership on sustainable development. With over two decades of experience across Asia-Pacific, the Arab States, and Eastern Europe, she specializes in governance, climate finance, and advancing inclusive, sustainable development.",
-  },
-  {
-    name: "Eryk Budi Pratama",
-    title: "Vice Chairman of Standing Committee for AI and PDP",
-    org: "Indonesian Chamber of Commerce and Industry (KADIN)",
-    country: "Indonesia",
-    img: "/images/speaker-eryk-pratama.png",
-    topic: "",
-    tag: "",
-    bio: "Eryk Budi Pratama is one of Indonesia’s foremost professionals in cybersecurity, data protection & privacy, and AI GRC & Security. With over a decade of experience spanning across strategy, regulation, implementation, and advisory roles across the private and public sectors. Eryk currently serves as Vice Chairman of the Standing Committee for Artificial Intelligence & Personal Data Protection at KADIN Indonesia, Chairman of several think tanks, and Advisor for several technology companies. Eryk also actively participates in various associations and communities. As a trusted and strategic advisor to various Indonesian government bodies, he plays a critical role in shaping policies and strategy for Cybersecurity, Data Protection/Privacy, and AI GRCS.",
-  },
-  {
-    name: "Sajal Bhatnagar",
-    title: "Chief Digital Officer",
-    org: "PT Allo Bank Indonesia Tbk",
-    country: "Indonesia",
-    img: "/images/speaker-sajal-bhatnagar.png",
-    topic: "",
-    tag: "",
-    bio: "",
-  },
-  {
-    name: "Mark Jefferson Go",
-    title: "Chief Strategy, Research and Development Officer",
-    org: "PT. Erajaya Swasembada, Tbk",
-    country: "Indonesia",
-    img: "/images/speaker-mark-jefferson-go.png",
-    topic: "",
-    tag: "",
-    bio: "As Chief Strategy, Research and Development of Indonesia’s largest device retailer and distributor, Mark drives corporate growth, digital transformation, and business model innovation. His role spans strategy design, performance dashboards, predictive insights, and executive decision support  placing me at the intersection of strategy and data.",
-  },
-  {
-    name: "Nicholas T.",
-    title: "Head of Retail Banking",
-    org: "PT Bank Jago Tbk",
-    country: "Singapore",
-    img: "/images/speaker-nicholas-t.png",
-    topic: "",
-    tag: "",
-    bio: "",
-  },
-  {
-    name: "Arief Setiawan",
-    title: "Chief Technology Officer",
-    org: "PT Asian Bulk Logistics",
-    country: "Indonesia",
-    img: "/images/speaker-arief-setiawan.png",
-    topic: "",
-    tag: "",
-    bio: "I blend technology with Business Consulting to build award-winning, efficient Corporation and Business Process. My expertise in profit center management and IT consulting is backed by a string of accolades, including the Best CTO of The Year 2024 from BusinessAsia, Top CIO on Digital Implementation 2024 & 2025 in TOP Digital Awards IT Works, HR Excellence SWA Award 2021 and multiple recognitions for HR and technology innovations",
-  },
-  {
-    name: "Dian Martin",
-    title: "Chairman",
-    org: "Indonesian AI Association",
-    country: "Indonesia",
-    img: "/images/speaker-dian-martin.png",
-    topic: "",
-    tag: "",
-    bio: "Chairman of the Indonesian AI Association, focusing on responsible AI adoption, talent development, and AI-driven digital transformation across industry and public sectors in Indonesia.",
-  },
-{
-    name: "Andre E. Susanto",
-    title: "Chief Technology Officer",
-    org: "Quantum Power Asia",
-    country: "Indonesia",
-    img: "/images/speaker-andre-susanto.png",
-    topic: "",
-    tag: "",
-    bio: "",
-  },
-];
-
-function SpeakerCard({ s, onSelect }: { s: typeof speakers[0]; onSelect: (s: typeof speakers[0]) => void }) {
+function SpeakerCard({ s, onSelect }: { s: Speaker; onSelect: (s: Speaker) => void }) {
   const [flipped, setFlipped] = useState(false);
-  const isKeynote = s.tag === "Keynote";
 
   return (
     <div
@@ -143,12 +20,11 @@ function SpeakerCard({ s, onSelect }: { s: typeof speakers[0]; onSelect: (s: typ
         <div className="sc-face sc-front">
           <div className="sc-photo">
             <Image
-              src={s.img} alt={s.name} fill
+              src={s.image} alt={s.name} fill
               sizes="(max-width:640px) 50vw, (max-width:1200px) 33vw, 300px"
               style={{ objectFit: "cover", objectPosition: "top center" }}
             />
             <div className="sc-grad" />
-            {isKeynote && <span className="sc-badge">Keynote</span>}
             <div className="sc-foot">
               <div className="sc-name">{s.name}</div>
               <div className="sc-role">{s.title}</div>
@@ -159,30 +35,25 @@ function SpeakerCard({ s, onSelect }: { s: typeof speakers[0]; onSelect: (s: typ
 
         {/* BACK — desktop hover only */}
         <div className="sc-face sc-back">
-          <div className="sc-accent" style={{ background: isKeynote ? "#c0f43c" : "#1b9ad6" }} />
+          <div className="sc-accent" style={{ background: "#1b9ad6" }} />
           <div className="sc-back-body">
             <div className="sc-back-top">
               <div className="sc-av">
-                <Image src={s.img} alt={s.name} fill sizes="52px"
+                <Image src={s.image} alt={s.name} fill sizes="52px"
                   style={{ objectFit: "cover", objectPosition: "top center" }} />
               </div>
               <div>
                 <div className="sc-bname">{s.name}</div>
-                <div className="sc-brole" style={{ color: isKeynote ? "#c0f43c" : "#1b9ad6" }}>{s.title}</div>
+                <div className="sc-brole" style={{ color: "#1b9ad6" }}>{s.title}</div>
                 <div className="sc-borg">{s.org}</div>
               </div>
             </div>
             <div className="sc-rule" />
-            <div className="sc-topic">
-              <span className="sc-topic-dot" style={{ background: isKeynote ? "#c0f43c" : "#1b9ad6" }} />
-              {s.topic}
-            </div>
-            <p className="sc-bio">{s.bio}</p>
+            <p className="sc-bio">{s.description}</p>
             <div className="sc-back-foot">
               <span className="sc-tag"
-                style={{ background: isKeynote ? "rgba(192,244,60,0.12)" : "rgba(27,154,214,0.12)",
-                         color: isKeynote ? "#c0f43c" : "#1b9ad6" }}>
-                {s.tag} Speaker
+                style={{ background: "rgba(27,154,214,0.12)", color: "#1b9ad6" }}>
+                Speaker
               </span>
               <span className="sc-ctry">{s.country}</span>
             </div>
@@ -194,11 +65,9 @@ function SpeakerCard({ s, onSelect }: { s: typeof speakers[0]; onSelect: (s: typ
   );
 }
 
-function SpeakerModal({ s, onClose }: { s: typeof speakers[0] | null; onClose: () => void }) {
-  const isKeynote = s?.tag === "Keynote";
-  const accent = s ? (isKeynote ? "#c0f43c" : "#1b9ad6") : "#1b9ad6";
+function SpeakerModal({ s, onClose }: { s: Speaker | null; onClose: () => void }) {
+  const accent = "#1b9ad6";
 
-  // Lock body scroll when open
   useEffect(() => {
     if (s) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "";
@@ -223,17 +92,16 @@ function SpeakerModal({ s, onClose }: { s: typeof speakers[0] | null; onClose: (
 
         {/* Hero image */}
         <div className="sm-hero">
-          <Image src={s.img} alt={s.name} fill sizes="(max-width:600px) 100vw, 480px"
+          <Image src={s.image} alt={s.name} fill sizes="(max-width:600px) 100vw, 480px"
             style={{ objectFit: "cover", objectPosition: "top center" }} />
           <div className="sm-hero-grad" />
-          {isKeynote && <span className="sm-badge">Keynote</span>}
         </div>
 
         {/* Content */}
         <div className="sm-body">
           <div className="sm-tag-row">
-            <span className="sm-tag" style={{ background: isKeynote ? "rgba(192,244,60,0.12)" : "rgba(27,154,214,0.12)", color: accent, border: `1px solid ${accent}40` }}>
-              {s.tag} Speaker
+            <span className="sm-tag" style={{ background: "rgba(27,154,214,0.12)", color: accent, border: `1px solid ${accent}40` }}>
+              Speaker
             </span>
             <span className="sm-ctry">{s.country}</span>
           </div>
@@ -244,12 +112,19 @@ function SpeakerModal({ s, onClose }: { s: typeof speakers[0] | null; onClose: (
 
           <div className="sm-rule" />
 
-          <div className="sm-topic-row">
-            <span className="sm-topic-dot" style={{ background: accent }} />
-            <span className="sm-topic-text">{s.topic}</span>
-          </div>
+          <p className="sm-bio">{s.description}</p>
 
-          <p className="sm-bio">{s.bio}</p>
+          {s.linkedin && (
+            <a
+              href={s.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="sm-linkedin"
+              style={{ color: accent }}
+            >
+              LinkedIn →
+            </a>
+          )}
         </div>
 
       </div>
@@ -259,7 +134,7 @@ function SpeakerModal({ s, onClose }: { s: typeof speakers[0] | null; onClose: (
 
 export default function SpeakersPage() {
   const ref = useRef<HTMLDivElement>(null);
-  const [activeSpeaker, setActiveSpeaker] = useState<typeof speakers[0] | null>(null);
+  const [activeSpeaker, setActiveSpeaker] = useState<Speaker | null>(null);
 
   useEffect(() => {
     const el = ref.current;
@@ -321,7 +196,7 @@ export default function SpeakersPage() {
         {/* ══ GRID — immediately below header ══ */}
         <div className="sp-grid">
           {speakers.map((s, i) => (
-            <div key={i} className="reveal" style={{ transitionDelay: `${(i % 4) * 60}ms` }}>
+            <div key={s.id} className="reveal" style={{ transitionDelay: `${(i % 4) * 60}ms` }}>
               <SpeakerCard s={s} onSelect={setActiveSpeaker} />
             </div>
           ))}
@@ -405,7 +280,6 @@ export default function SpeakersPage() {
           margin-bottom: 18px;
         }
         .sp-h1-accent {
-          /* Gradient text */
           background: linear-gradient(100deg, #1b9ad6 0%, #c0f43c 100%);
           -webkit-background-clip: text; -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -495,13 +369,6 @@ export default function SpeakersPage() {
           position: absolute; inset: 0; z-index: 1;
           background: linear-gradient(to bottom, transparent 30%, rgba(3,7,26,0.55) 62%, rgba(3,7,26,0.97) 100%);
         }
-        .sc-badge {
-          position: absolute; top: 12px; right: 12px; z-index: 3;
-          font-family: var(--font-space); font-size: 9px; font-weight: 700;
-          letter-spacing: 0.14em; text-transform: uppercase;
-          background: #c0f43c; color: #1a1f4e;
-          padding: 3px 9px; border-radius: 100px;
-        }
         .sc-foot {
           position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
           padding: 14px 16px 18px;
@@ -551,12 +418,6 @@ export default function SpeakersPage() {
           color: rgba(255,255,255,0.3); line-height: 1.3;
         }
         .sc-rule { height: 1px; background: rgba(255,255,255,0.06); margin-bottom: 10px; flex-shrink: 0; }
-        .sc-topic {
-          display: flex; align-items: center; gap: 6px; margin-bottom: 9px; flex-shrink: 0;
-          font-family: var(--font-inter); font-size: 9.5px; font-weight: 700;
-          color: rgba(255,255,255,0.32); text-transform: uppercase; letter-spacing: 0.12em;
-        }
-        .sc-topic-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
         .sc-bio {
           font-family: var(--font-inter); font-size: 11.5px; color: rgba(255,255,255,0.48);
           line-height: 1.7; flex: 1;
@@ -602,7 +463,7 @@ export default function SpeakersPage() {
         }
         .sp-agenda-btn:hover { border-color: rgba(255,255,255,0.55); box-shadow: 0 0 16px rgba(255,255,255,0.10); }
 
-        /* ── Speaker modal (full screen popup) ── */
+        /* ── Speaker modal ── */
         .sm-overlay {
           position: fixed; inset: 0; z-index: 1100;
           background: rgba(4,8,28,0.88);
@@ -673,12 +534,6 @@ export default function SpeakersPage() {
         @media (max-width: 480px) {
           .sm-hero { height: 55vw; min-height: 260px; }
         }
-        .sm-badge {
-          position: absolute; top: 12px; left: 12px; z-index: 2;
-          font-family: var(--font-space); font-size: 9px; font-weight: 700;
-          letter-spacing: 0.14em; text-transform: uppercase;
-          background: #c0f43c; color: #1a1f4e; padding: 3px 10px; border-radius: 100px;
-        }
         .sm-body { padding: 0 24px 32px; }
         .sm-tag-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
         .sm-tag {
@@ -690,10 +545,14 @@ export default function SpeakersPage() {
         .sm-title { font-family: var(--font-inter); font-size: 13px; font-weight: 600; margin-bottom: 4px; line-height: 1.4; }
         .sm-org { font-family: var(--font-inter); font-size: 12px; color: rgba(255,255,255,0.35); margin-bottom: 20px; }
         .sm-rule { height: 1px; background: rgba(255,255,255,0.07); margin-bottom: 16px; }
-        .sm-topic-row { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
-        .sm-topic-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-        .sm-topic-text { font-family: var(--font-inter); font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.12em; }
         .sm-bio { font-family: var(--font-inter); font-size: 14px; color: rgba(255,255,255,0.72); line-height: 1.8; }
+        .sm-linkedin {
+          display: inline-block; margin-top: 16px;
+          font-family: var(--font-space); font-size: 12px; font-weight: 700;
+          letter-spacing: 0.06em; text-decoration: none;
+          transition: opacity 0.18s;
+        }
+        .sm-linkedin:hover { opacity: 0.7; }
 
         /* Disable flip on mobile — tap opens modal */
         @media (max-width: 900px) {
