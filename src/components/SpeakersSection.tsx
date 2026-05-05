@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { speakers } from "@/data/speakers";
 
-const total = speakers.length;
+const homeSpeakers = speakers.slice(0, 8);
+const total = homeSpeakers.length;
 
 export default function SpeakersSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -78,7 +79,7 @@ export default function SpeakersSection() {
           <div className="sp-track">
             {positions.map((offset) => {
               const idx = getIdx(offset);
-              const s = speakers[idx];
+              const s = homeSpeakers[idx];
               const isCenter = offset === 0;
               const isPrev = offset === -1;
               const isNext = offset === 1;
@@ -91,7 +92,7 @@ export default function SpeakersSection() {
                   {/* photo */}
                   <div className="sp-photo">
                     <Image
-                      src={s.img}
+                      src={s.image}
                       alt={s.name}
                       fill
                       sizes="320px"
@@ -99,9 +100,6 @@ export default function SpeakersSection() {
                     />
                     {/* gradient overlay */}
                     <div className="sp-photo-grad" />
-
-                    {/* keynote badge */}
-                    {s.keynote && <span className="sp-keynote">Keynote</span>}
 
                     {/* center card glow ring */}
                     {isCenter && <div className="sp-glow-ring" />}
@@ -136,7 +134,7 @@ export default function SpeakersSection() {
 
         {/* dots */}
         <div className="sp-dots sp-reveal">
-          {speakers.map((_, i) => (
+          {homeSpeakers.map((_, i) => (
             <button key={i} className={`sp-dot${i === current ? " sp-dot-active" : ""}`}
               onClick={() => { setDir(i > current ? "next" : "prev"); setCurrent(i); }} />
           ))}
