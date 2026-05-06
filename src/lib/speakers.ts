@@ -41,9 +41,14 @@ function transform(s: any): Speaker {
 // page both calling fetchSpeakers() only triggers one network request).
 export const fetchSpeakers = cache(async (): Promise<Speaker[]> => {
   try {
-    const res = await fetch(API_URL, {
-      cache: "no-store", // always fetch fresh — no CDN/Next.js caching
-    });
+    const abort = new AbortController();
+    const timer = setTimeout(() => abort.abort(), 6000);
+    let res: Response;
+    try {
+      res = await fetch(API_URL, { cache: "no-store", signal: abort.signal });
+    } finally {
+      clearTimeout(timer);
+    }
 
     if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
 
