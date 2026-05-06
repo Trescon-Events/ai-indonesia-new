@@ -48,6 +48,8 @@ export default function SpeakersSection({ speakers }: Props) {
   /* positions: prev=-1, center=0, next=+1 */
   const positions = [-1, 0, 1];
 
+  if (total === 0) return null;
+
   return (
     <section id="speakers" ref={ref} className="sp-root">
       <div className="sp-fade-top" />
