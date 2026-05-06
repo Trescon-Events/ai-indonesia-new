@@ -2,12 +2,12 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { speakers } from "@/data/speakers";
+import type { Speaker } from "@/lib/speakers";
 
-const homeSpeakers = speakers.slice(0, 8);
-const total = homeSpeakers.length;
+type Props = { speakers: Speaker[] };
 
-export default function SpeakersSection() {
+export default function SpeakersSection({ speakers }: Props) {
+  const total = speakers.length;
   const ref = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
   const [animating, setAnimating] = useState(false);
@@ -79,7 +79,7 @@ export default function SpeakersSection() {
           <div className="sp-track">
             {positions.map((offset) => {
               const idx = getIdx(offset);
-              const s = homeSpeakers[idx];
+              const s = speakers[idx];
               const isCenter = offset === 0;
               const isPrev = offset === -1;
               const isNext = offset === 1;
@@ -134,7 +134,7 @@ export default function SpeakersSection() {
 
         {/* dots */}
         <div className="sp-dots sp-reveal">
-          {homeSpeakers.map((_, i) => (
+          {speakers.map((_, i) => (
             <button key={i} className={`sp-dot${i === current ? " sp-dot-active" : ""}`}
               onClick={() => { setDir(i > current ? "next" : "prev"); setCurrent(i); }} />
           ))}
